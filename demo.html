@@ -62,5 +62,80 @@
     </div>
 </footer>
 
+
+<script>
+    
+    // #region ==================== UTILS
+    
+    function getAbsClientRect(el) {
+        let rect = el.getBoundingClientRect();
+        rect.y = rect.y + scrollY;
+        rect.top = rect.top + scrollY;
+        rect.bottom = rect.bottom + scrollY;
+        return rect;
+    }
+    function rem(number) {
+        return 16 * number;
+    }
+    
+    //#endregion
+    
+    
+    // #region ==================== LOGIC
+    
+    let stateClasses = [
+        "sticky-bottom",        // sticky on, element bottom is sticky
+        "sticky-absolute",      // sticky off, absolute on, element is scrollable
+        "sticky-top",           // sticky on, element top is sticky
+        "sticky-top-end",       // sticky off, element at the top of the container
+        "sticky-bottom-end",    // sticky off, element at the bottom of the container
+    ];
+    
+    function handleStickyScroll() {
+        
+        let asideAbsClientRect = getAbsClientRect(aside);
+        
+        let shouldAsideBeAtTheContainerTop      = scrollY <= asideContainerAbsClientRect.top + asideAbsClientRect.height + asideStickyMargin - visualViewport.height;
+        let shouldAsideBeAtTheContainerBottom   = scrollY >= asideContainerAbsClientRect.bottom + asideStickyMargin - visualViewport.height;
+        let shouldAsideBottomStick              = scrollY >= asideAbsClientRect.bottom + asideStickyMargin - visualViewport.height;
+        
+        if (shouldAsideBeAtTheContainerTop) {
+            if (!aside.classList.contains("sticky-top-end")) {
+                stateClasses.forEach(cls => aside.classList.remove(cls));
+                aside.classList.add("sticky-top-end");
+            }
+        }
+        else if (shouldAsideBeAtTheContainerBottom) {
+            if (!aside.classList.contains("sticky-bottom-end")) {
+                stateClasses.forEach(cls => aside.classList.remove(cls));
+                aside.classList.add("sticky-bottom-end");
+            }
+        }
+        else if (shouldAsideBottomStick) {
+            if (!aside.classList.contains("sticky-bottom")) {
+                stateClasses.forEach(cls => aside.classList.remove(cls));
+                aside.classList.add("sticky-bottom");
+            }
+        }
+        
+    }
+    
+    //#endregion
+    
+    
+    let aside               = document.querySelector("aside");
+    let asideAbsClientRect  = getAbsClientRect(aside);
+    let asideContainer      = aside.parentElement;
+    let asideContainerAbsClientRect = getAbsClientRect(asideContainer);
+    let asideStickyMargin   = rem(2);
+    let asideTopOffset      = (asideAbsClientRect.height + asideStickyMargin - visualViewport.height) * -1 + "px";
+    aside.style.setProperty("--sticky-top-value", asideTopOffset);
+    
+    handleStickyScroll();
+    
+    window.addEventListener("scroll", handleStickyScroll);
+    
+</script>
+
 </body>
 </html>
