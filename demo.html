@@ -4,65 +4,7 @@
     <meta charset="utf-8">
     <title>Overflowing Sticky</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: inherit;
-        }
-        body {
-            font-family: sans-serif;
-            box-sizing: border-box;
-        }
-        .container {
-            --margin-vertical: 2rem;
-            width: 80%;
-            margin: var(--margin-vertical) auto;
-        }
-        header .item {
-            background-color: lightpink;
-            height: 10rem;
-        }
-        footer .item {
-            background-color: mediumpurple;
-            height: 20rem;
-        }
-        body > .container {
-            display: flex;
-            gap: 1rem;
-        }
-        .sticky-container {
-            width: 20%;
-            position: relative;
-        }
-        aside {
-            --sticky-top-value: unset;
-            --sticky-top-value: var(--margin-vertical);
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            position: sticky;
-            top: var(--sticky-top-value);
-            width: 100%;
-        }
-        aside .item {
-            background-color: lightgreen;
-            height: 5rem;
-        }
-        main {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            flex-grow: 1;
-        }
-        main .item {
-            background-color: lightblue;
-            height: 15rem;
-        }
-        .item {
-            padding: 1rem;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
